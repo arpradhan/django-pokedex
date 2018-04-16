@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import RedirectView
 
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
@@ -22,7 +23,9 @@ from rest_framework.schemas import get_schema_view
 
 from pokemon.views import PokemonViewSet
 
-schema_view = get_schema_view(title='Pokedex API')
+title = 'Pokédex API'
+
+schema_view = get_schema_view(title=title)
 
 pokemon_list = PokemonViewSet.as_view({
     'get': 'list',
@@ -37,6 +40,7 @@ router.register(r'pokemon', PokemonViewSet)
 urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('schema', schema_view),
-    path('docs', include_docs_urls(title='Pokdex API')),
+    path('schema/', schema_view),
+    path('docs/', include_docs_urls(title=title)),
+    path('', RedirectView.as_view(url='docs/'))
 ]
