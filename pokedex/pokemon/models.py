@@ -8,4 +8,6 @@ class Pokemon(models.Model):
     species_id = models.IntegerField()
     height = models.IntegerField()
     weight = models.IntegerField()
+    base_experience = models.IntegerField(default=0)
+    order = models.IntegerField(default=1)
     is_default = models.BooleanField(default=True)
